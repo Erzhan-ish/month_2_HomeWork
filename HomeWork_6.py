@@ -42,5 +42,5 @@ def  binary_search(list, value):
         print('Элемент не найден')
 
 
-index = binary_search([12,34,56,78,89,94,112], 56)
+index = binary_search([12,34,56,78,89], 56)
 print(f'Искомый элемент в списке имеет индекс {index}!')
