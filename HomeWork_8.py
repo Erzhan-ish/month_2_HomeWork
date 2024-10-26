@@ -29,49 +29,47 @@ import sqlite3
 #     )
 # ''')
 
-def display_students(city_id):
-    conn = sqlite3.connect('HomeWork_8.db')
-    cursor = conn.cursor()
+def cit():
+    connect = sqlite3.connect('HomeWork_8.db')
+    cur = connect.cursor()
+    cur.execute('''SELECT id, title FROM cities''')
+    for row in cur.fetchall():
+        print(f'{row[0]}: {row[1]}')
+    connect.close()
 
-    cursor.execute('''
-    SELECT students.first_name, students.last_name, countries.title, cities.title, cities.area
-    FROM students
-    JOIN cities ON students.city_id = cities.id
-    JOIN countries ON cities.country_id = countries.id
-    WHERE cities.id = ?
-    ''', (city_id,))
 
-    students = cursor.fetchall()
+def info_students(CityId):
+    connect = sqlite3.connect('HomeWork_8.db')
+    cur = connect.cursor()
+    cur.execute('''
+        SELECT students.first_name, students.last_name, countries.title, cities.title, cities.area 
+        FROM students
+        JOIN cities ON students.city_id = cities.id
+        JOIN countries ON cities.country_id = countries.id
+        WHERE cities.id = ?
+    ''', (CityId,))
+
+    students = cur.fetchall()
     if students:
         for student in students:
-            print(f"Имя: {student[0]}, Фамилия: {student[1]}, Страна: {student[2]}, Город: {student[3]}, Площадь города: {student[4]}")
+            print(
+                f"Имя: {student[0]}, Фамилия: {student[1]}, Страна: {student[2]}, Город: {student[3]}, Площадь города: {student[4]}")
     else:
-        print("Нет учеников в выбранном городе.")
+        print("Нет учеников в этом городе.")
+    connect.close()
 
-    conn.close()
 
 
-def main():
-    print(
-        "Вы можете отобразить список учеников по выбранному id города из перечня городов ниже, для выхода из программы введите 0:")
+cit()
 
-    conn = sqlite3.connect('HomeWork_8.db')
-    cursor = conn.cursor()
 
-    cursor.execute('SELECT id, title FROM cities')
-    cities = cursor.fetchall()
-
-    for city in cities:
-        print(f"{city[0]}: {city[1]}")
-
-    while True:
-        city_id = int(input("Введите id города: "))
-        display_students(city_id)
-        if city_id == 0:
+while True:
+    try:
+        CityId = int(input(
+            'Вы можете отобразить список учеников по выбранному id города из перечня городов выше, для выхода из программы введите 0: '))
+        if CityId == 0:
+            print("Выход из программы.")
             break
-
-    conn.close()
-
-
-if __name__ == "__main__":
-    main()
+        info_students(CityId)
+    except ValueError:
+        print("Пожалуйста, введите корректное число.")
