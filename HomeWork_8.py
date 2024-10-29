@@ -1,8 +1,8 @@
 import sqlite3
 
 
-# connect = sqlite3.connect('HomeWork_8.db')
-# cur = connect.cursor()
+connect = sqlite3.connect('HomeWork_8.db')
+cur = connect.cursor()
 
 # cur.execute('''
 #     create table if not exists countries(
