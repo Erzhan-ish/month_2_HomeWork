@@ -30,7 +30,7 @@ cursor.execute('''
     )
 ''')
 
-# Вставка данных в таблицы (закомментируйте эти строки, если данные уже есть)
+
 cursor.executemany('INSERT INTO categories VALUES (?, ?)', [
     ('FD', 'Food products'),
     ('EL', 'Electronics'),
